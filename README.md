@@ -1,8 +1,6 @@
-# Smart_Ecommerce_llm
-This is repo introduces Ecommerce website that make chats with users and handle their requests by llm (large language model) to process complex quires.
-# LLM E-commerce Assistant Documentation
 
 ## Overview
+This is repo introduces Ecommerce website that make chats with users and handle their requests by llm (large language model) to process complex quires.
 This is a Flask-based e-commerce website that uses Google's Gemini 1.5 Pro LLM through LangChain to provide intelligent product recommendations and answer customer questions. The application features a product catalog stored in SQLite and a chat interface for customer interactions.
 
 ## Project Structure
@@ -169,4 +167,74 @@ run = "python init_db.py && python app.py"
 
 6. Click "Run" to start the application
 
-[Rest of documentation remains the same...]
+
+### Important Notes for Replit
+- The SQLite database will be created in the project directory
+- The application will be accessible via the URL provided by Replit
+- Make sure to keep your API key secret by using Replit's Secrets management
+
+## Usage Guide
+
+### Adding Products
+To add new products to the database, you can use the SQLite command line or create a management script:
+
+```python
+import sqlite3
+
+def add_product(name, price, description):
+    conn = sqlite3.connect('ecommerce.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO products (name, price, description) VALUES (?, ?, ?)',
+              (name, price, description))
+    conn.commit()
+    conn.close()
+```
+
+### Using the Chat Interface
+1. Browse the available products displayed on the main page
+2. Use the chat interface to:
+   - Ask about specific products
+   - Get product recommendations
+   - Inquire about prices and features
+   - Ask for comparisons between products
+
+### Example Chat Interactions
+- "What's your best laptop under $1000?"
+- "Can you compare the features of your smartphones?"
+- "I need noise-cancelling headphones for travel, what do you recommend?"
+
+## Troubleshooting
+
+### Common Issues
+1. Database Connection Error
+   - Ensure the database file has proper permissions
+   - Check if SQLite is installed properly
+
+2. API Key Issues
+   - Verify the API key is correctly set in the `.env` file
+   - Check if the API key has proper permissions for Gemini
+
+3. Chat Not Responding
+   - Check the browser console for JavaScript errors
+   - Verify the Flask server is running
+   - Ensure the API key is valid and has sufficient quota
+
+## Maintenance
+
+### Database Backup
+Regularly backup your SQLite database:
+```bash
+sqlite3 ecommerce.db .dump > backup.sql
+```
+
+### Updating Dependencies
+Periodically update the dependencies:
+```bash
+pip install --upgrade -r requirements.txt
+```
+
+## Security Considerations
+- Keep your `.env` file secure and never commit it to version control
+- Regularly update dependencies for security patches
+- Implement rate limiting for the chat endpoint in production
+- Sanitize user input before processing
